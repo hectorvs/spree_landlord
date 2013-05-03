@@ -4,8 +4,12 @@ module Spree
       extend ActiveSupport::Concern
 
       included do
-        prepend_before_filter :add_tenant_view_path, if: :is_spree_tenant?
-        prepend_before_filter :set_current_tenant, if: :is_spree_tenant?
+        prepend_before_filter :set_tenant_and_view_path, if: :is_spree_tenant?
+      end
+
+      def set_tenant_and_view_path
+        set_current_tenant
+        add_tenant_view_path
       end
 
       def set_current_tenant
